@@ -1,21 +1,12 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+  <div class="main">
+    <div class="main__wrapper">
+      <div class="main__wrapper__input">
+        <input type='text' placeholder="Cost of the item" v-model="costOfItem">
+        <input type='text' placeholder="Pay per hour" v-model="payPerHour">
+      </div>
+      <h2>{{ this.time() }}</h2>
+    </div>
   </div>
 </template>
 
@@ -24,37 +15,49 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      costOfItem: 0, 
+      payPerHour: 0
+    }
+  },
+  methods: {
+    time: function () {
+      console.log(this.hasValidValues());
+      if(this.hasValidValues()) {
+        return this.costOfItem/this.payPerHour;
+      }
+    },
+    hasValidValues: function () {
+      if(this.costOfItem && 
+        this.payPerHour && 
+        this.costOfItem !== undefined && 
+        this.payPerHour !== undefined) {
+        return true;
+      }
+      return false;
     }
   }
 }
 </script>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="less">
+body, html {
+  height: 100%;
+  margin: 0;
 }
+.main {
+  display:flex;
+  flex-direction: column;
+  height: 100%;
 
-h1, h2 {
-  font-weight: normal;
-}
+  &__wrapper {
+    display:flex;
+    margin: auto;
+    flex-direction: column;
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+    &__input {
+    display:flex;
+    flex-direction: row;
+    }
+  }
 }
 </style>
